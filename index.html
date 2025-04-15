@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>生成AIで記事を作ろう！</title>
+  <style>
+    body {
+      font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fff0f5;
+    }
+    
+    .slide-container {
+      width: 800px;
+      height: 500px;
+      margin: 20px 0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      position: relative;
+    }
+    
+    .slide {
+      width: 100%;
+      height: 100%;
+      padding: 40px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .title {
+      font-size: 36px;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #d35d98;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .subtitle {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #d35d98;
+    }
+    
+    .content {
+      font-size: 24px;
+      line-height: 1.6;
+    }
+    
+    .item {
+      margin-bottom: 25px;
+      padding-left: 20px;
+    }
+    
+    .item-text {
+      font-size: 22px;
+    }
+    
+    .item-text strong {
+      font-size: 26px;
+      color: #d35d98;
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    .slide1 {
+      background: linear-gradient(135deg, #fff0f5, #ffe6f2);
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .slide2 {
+      background: linear-gradient(135deg, #e6f7ff, #d4ebf2);
+    }
+    
+    .slide3 {
+      background: linear-gradient(135deg, #f3e5f5, #e0d1ea);
+    }
+    
+    .slide4 {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    }
+    
+    .slide5 {
+      background: linear-gradient(135deg, #fff9c4, #fff59d);
+    }
+    
+    .slide6 {
+      background: linear-gradient(135deg, #ffebee, #ffcdd2);
+    }
+    
+    .slide7 {
+      background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+    }
+    
+    .slide8 {
+      background: linear-gradient(135deg, #f0f4c3, #dce775);
+    }
+    
+    .slide9 {
+      background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+    }
+    
+    .slide10 {
+      background: linear-gradient(135deg, #fff0f5, #ffe6f2);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    
+    .slide-number {
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      font-size: 14px;
+      color: rgba(0,0,0,0.4);
+    }
+    
+    .tools-container {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-top: 20px;
+    }
+    
+    .tool-item {
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 30%;
+    }
+    
+    .tool-item h3 {
+      font-size: 26px;
+      color: #d35d98;
+      margin: 10px 0;
+    }
+    
+    .tool-item p {
+      font-size: 20px;
+    }
+    
+    .benefit-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .benefit-item {
+      width: 48%;
+      background: rgba(255,255,255,0.7);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+    
+    .benefit-single {
+      width: 80%;
+      margin: 20px auto;
+      background: rgba(255,255,255,0.7);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+    
+    .two-columns {
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+    }
+    
+    .column {
+      width: 48%;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    
+    .control-button {
+      background: #d35d98;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 30px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+    }
+    
+    .control-button:hover {
+      background: #e27db1;
+      transform: translateY(-2px);
+    }
+    
+    .control-button:active {
+      transform: translateY(1px);
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- スライド1: タイトル -->
+  <div class="slide-container" id="slide1">
+    <div class="slide slide1">
+      <h1 class="title" style="font-size: 46px; margin-bottom: 40px;">✨ 生成AIで記事を作ろう！ ✨</h1>
+      <p class="content" style="text-align: center; font-size: 30px;">〜 AIの基本と活用法 〜</p>
+      <div class="slide-number">1/10</div>
+    </div>
+  </div>
+
+  <!-- スライド2: 生成AIとは -->
+  <div class="slide-container hidden" id="slide2">
+    <div class="slide slide2">
+      <h2 class="title">🌸 生成AIの基本概念 🌸</h2>
+      <h3 class="subtitle" style="margin-top: 10px;">生成AIって何？</h3>
+      <p class="content" style="font-size: 28px; padding: 0 20px; margin-top: 0px;">
+        人間のように文章や絵を作れるコンピュータプログラムです。<br><br>
+        あなたのアイデアを膨らませてくれる、賢いお手伝いさんのようなものです💕
+      </p>
+      <div class="slide-number">2/10</div>
+    </div>
+  </div>
+
+  <!-- スライド3: AIの動き方 -->
+  <div class="slide-container hidden" id="slide3">
+    <div class="slide slide3">
+      <h2 class="title">どうやって動くの？</h2>
+      <div class="item" style="margin-top: 20px;">
+        <div class="item-text">
+          <strong>たくさんの本を読んだ友達みたい</strong>
+          AIはインターネット上の多くの文章や絵を見て学習しています
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-text">
+          <strong>パズルのように組み立てる</strong>
+          AIは学んだことを使って、新しい文章や絵を作ります
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-text">
+          <strong>会話ができる</strong>
+          あなたが質問や指示をすると、AIがそれに答えます
+        </div>
+      </div>
+      <div class="slide-number">3/10</div>
+    </div>
+  </div>
+
+  <!-- スライド4: 有名なAIツール -->
+  <div class="slide-container hidden" id="slide4">
+    <div class="slide slide4">
+      <h2 class="title">💖 有名な生成AIツール 💖</h2>
+      <div class="tools-container">
+        <div class="tool-item">
+          <h3>ChatGPT 💬</h3>
+          <p>一番有名なAI。会話形式で使いやすい</p>
+        </div>
+        <div class="tool-item">
+          <h3>Claude 🦢</h3>
+          <p>長い文章を<br>理解するのが得意</p>
+        </div>
+        <div class="tool-item">
+          <h3>Gemini 🔍</h3>
+          <p>Googleが作ったAI。最新情報に強い</p>
+        </div>
+      </div>
+      <div class="slide-number">4/10</div>
+    </div>
+  </div>
+
+  <!-- スライド5: AIが得意なこと -->
+  <div class="slide-container hidden" id="slide5">
+    <div class="slide slide5">
+      <h2 class="title">🌟 AIが得意なこと 🌟</h2>
+      <div class="two-columns" style="margin-top: 20px;">
+        <div class="column">
+          <div class="item">
+            <div class="item-text">
+              <strong>たくさんの文章を書く ✒️</strong>
+              記事の下書き、レポート作成
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-text">
+              <strong>情報をまとめる 📋</strong>
+              長い文章を短くまとめる
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="item">
+            <div class="item-text">
+              <strong>アイデアを出す 💡</strong>
+              記事のテーマや構成を考える
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-text">
+              <strong>翻訳 🌏</strong>
+              日本語を英語に、英語を日本語にする
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">5/10</div>
+    </div>
+  </div>
+
+  <!-- スライド6: AIが苦手なこと -->
+  <div class="slide-container hidden" id="slide6">
+    <div class="slide slide6">
+      <h2 class="title">🌟 AIが苦手なこと 🌟</h2>
+      <div class="two-columns" style="margin-top: 20px;">
+        <div class="column">
+          <div class="item">
+            <div class="item-text">
+              <strong>最新情報 📰</strong>
+              AIによって学習データの時期が違うので、最新の出来事は知らないことがある
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-text">
+              <strong>正確な事実確認 🔍</strong>
+              時々間違った情報を言うことがある
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="item">
+            <div class="item-text">
+              <strong>独創的なアイデア ✨</strong>
+              本当に新しいことを考えるのは苦手
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-text">
+              <strong>感情や経験 💝</strong>
+              人間の気持ちを完全に理解するのは<br>難しい
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">6/10</div>
+    </div>
+  </div>
+
+  <!-- スライド7: AIのメリット1 -->
+  <div class="slide-container hidden" id="slide7">
+    <div class="slide slide7">
+      <h2 class="title">💐 記事作成でAIを活用するメリット 💐</h2>
+      <div class="benefit-row">
+        <div class="benefit-item">
+          <h3 class="subtitle">⚡ 作業が早くなる</h3>
+          <div class="item" style="margin-bottom: 15px;">
+            <div class="item-text" style="font-size: 24px;">記事の下書きが素早くできる</div>
+          </div>
+          <div class="item" style="margin-bottom: 0;">
+            <div class="item-text" style="font-size: 24px;">アイデア出しがスムーズ</div>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <h3 class="subtitle">💡 アイデアが<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;たくさん出る</h3>
+          <div class="item" style="margin-bottom: 15px;">
+            <div class="item-text" style="font-size: 24px;">行き詰まったときに新しい視点をくれる</div>
+          </div>
+          <div class="item" style="margin-bottom: 0;">
+            <div class="item-text" style="font-size: 24px;">違う切り口を提案してくれる</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">7/10</div>
+    </div>
+  </div>
+
+  <!-- スライド8: AIのメリット2 -->
+  <div class="slide-container hidden" id="slide8">
+    <div class="slide slide8">
+      <h2 class="title">💐 記事作成でAIを活用するメリット（続き）💐</h2>
+      <div style="display: flex; justify-content: center;">
+        <div class="benefit-single">
+          <h3 class="subtitle" style="text-align: center;">📝 文章の質が上がる</h3>
+          <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+            <div style="width: 45%;">
+              <div class="item-text" style="font-size: 28px; text-align: center;">
+                <strong style="display: block; margin-bottom: 15px; color: #d35d98;">文法ミスを減らせる ✓</strong>
+              </div>
+            </div>
+            <div style="width: 45%;">
+              <div class="item-text" style="font-size: 28px; text-align: center;">
+                <strong style="display: block; margin-bottom: 15px; color: #d35d98;">読みやすい文章にしてくれる 📖</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-number">8/10</div>
+    </div>
+  </div>
+
+  <!-- スライド9: 上手な付き合い方 -->
+  <div class="slide-container hidden" id="slide9">
+    <div class="slide slide9">
+      <h2 class="title">🌺 AIとの上手な付き合い方 🌺</h2>
+      <div class="item" style="margin-top: 20px;">
+        <div class="item-text">
+          <strong>はっきり指示する 📢</strong>
+          「面白い記事」より「10代向けの趣味の記事」と具体的に
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-text">
+          <strong>チェックする ✅</strong>
+          AIの答えは必ず自分で確認
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-text">
+          <strong>質問を工夫する 💫</strong>
+          うまく質問すると、もっといい答えがもらえる
+        </div>
+      </div>
+      <div class="slide-number">9/10</div>
+    </div>
+  </div>
+
+  <!-- スライド10: まとめ -->
+  <div class="slide-container hidden" id="slide10">
+    <div class="slide slide10">
+      <h2 class="title" style="margin-top: 20px;">まとめ</h2>
+      <p class="content" style="font-size: 32px; margin: 20px 0; line-height: 1.8;">
+        AIは魔法の杖ではありませんが、<br>
+        素敵な創作パートナーになります✨<br><br>
+        まずは簡単なことから試してみましょう！
+      </p>
+      <div class="slide-number">10/10</div>
+    </div>
+  </div>
+
+  <!-- スライド操作ボタン -->
+  <div class="controls">
+    <button class="control-button" id="prevBtn">前へ</button>
+    <button class="control-button" id="nextBtn">次へ</button>
+  </div>
+  
+  <script>
+    // スライドの表示・操作
+    let currentSlide = 1;
+    const totalSlides = 10;
+    
+    function showSlide(slideNumber) {
+      // 全てのスライドを非表示
+      for(let i = 1; i <= totalSlides; i++) {
+        document.getElementById('slide' + i).classList.add('hidden');
+      }
+      
+      // 指定したスライドを表示
+      document.getElementById('slide' + slideNumber).classList.remove('hidden');
+      
+      // ボタンの状態を更新
+      document.getElementById('prevBtn').disabled = slideNumber === 1;
+      document.getElementById('nextBtn').disabled = slideNumber === totalSlides;
+    }
+    
+    // 「前へ」ボタンのイベント
+    document.getElementById('prevBtn').addEventListener('click', function() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        showSlide(currentSlide);
+      }
+    });
+    
+    // 「次へ」ボタンのイベント
+    document.getElementById('nextBtn').addEventListener('click', function() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
+    });
+    
+    // キーボード操作
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        // 左矢印・上矢印キー
+        if (currentSlide > 1) {
+          currentSlide--;
+          showSlide(currentSlide);
+        }
+      } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown' || event.key === ' ') {
+        // 右矢印・下矢印・スペースキー
+        if (currentSlide < totalSlides) {
+          currentSlide++;
+          showSlide(currentSlide);
+        }
+      }
+    });
+    
+    // 初期表示
+    showSlide(currentSlide);
+  </script>
+
+</body>
+</html>
